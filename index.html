@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	
+</form>
+</head>
+<body>
+	<!-- <form action="#"> -->
+  		Youtube  Search: <input type="text" name="fname" id="query"><br>
+  						<input id="submit" type="submit" value="Submit">
+  	<!-- </form> -->
+	<div id="search-container"></div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var URL = "https://www.googleapis.com/youtube/v3/search";
+	var state ={
+		thumbnails:[],
+		videoID:[]
+
+	}
+
+
+var renderList = function(state, element) {
+    var itemsHTML = state.thumbnails.map(function(item, index) {
+        return "<a href='https://www.youtube.com/watch?v="+state.videoID[index] +"' ><img src='"+ item + "' alt =some content ></a>";
+    });
+    element.html(itemsHTML);
+};
+
+	 
+
+
+$("#submit").click(function(event){
+	var q = $('#query').val();
+
+$.getJSON(URL,
+	{
+		part:'snippet',
+		key:'AIzaSyCFxtZx3Ip9eK2kfq4MAuvUL3KdUvR0N5o',
+		q:q
+
+	},
+	// After the API loads, call a function to enable the search box.
+// function handleAPILoaded() {
+//   $('#search-button').attr('disabled', false);
+// }
+
+// // Search for a specified string.
+// function search() {
+//   var q = $('#query').val();
+//   var request = gapi.client.youtube.search.list({
+//     q: q,
+//     part: 'snippet'
+//   });
+
+//   request.execute(function(response) {
+//     var str = JSON.stringify(response.result);
+//     $('#search-container').html('<pre>' + str + '</pre>');
+//   });
+// }
+
+
+ function(data){
+ 	for(var i =0; i < 5; i++){
+ 	state.thumbnails.push(data.items[i].snippet.thumbnails.high.url );
+ 	state.videoID.push(data.items[i].id.videoId);}
+ 	renderList(state, $("#search-container"));
+	console.log(data);});
+
+
+
+
+
+
+
+});
+
+
+});
+</script>
+</body>
+</html>
+
