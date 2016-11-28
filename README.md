@@ -1,1 +1,2 @@
-youtube project for thinkful, still needs styling
+youtube project for thinkful
+https://kadinvanvalin.github.io/api-youtube-project/
